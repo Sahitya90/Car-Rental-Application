@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: hsl(0, 75%, 37%);
+        }
+        header {
+            background-color: #143a18;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+        .search-form input, .search-form select, .search-form button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-form button {
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background-color: #4cae4c;
+        }
+        .car-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .car-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            background-color: #fff;
+        }
+        .car-card img {
+            width: 100%;
+            height: auto;
+        }
+        .car-card .details {
+            padding: 10px;
+        }
+        .car-card .details h3 {
+            margin: 0 0 10px;
+        }
+        .car-card .details p {
+            margin: 0;
+        }
+        .car-card .details .price {
+            font-weight: bold;
+            color: #5cb85c;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Car Rental Application</h1>
+    </header>
+    <div class="container">
+        <div class="search-form">
+            <h2><u>Find Your Favourite Car</u></h2>
+            <form>
+                <input type="text" placeholder="Location" required>
+                <select required>
+                    <option value="" disabled selected>Select Car Type</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="commercial">Commercial</option>
+                </select>
+                <input type="date"  required>
+                <input type="date"  required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="car-list">
+            <div class="car-card">
+                <img src="https://mahindragoodwood.co.za/wp-content/uploads/2018/11/Mahindra-Scorpio-SUV-2.jpg/300x200" alt="Scorpio"/>
+                <div class="details">
+                    <h3>Mahindra Scorpio</h3>
+                    <p>Automatic - 7 Seats</p>
+                    <p class="price">Rs750/day</p>
+                </div>
+            </div>
+            <div class="car-card">
+                <img src="C:\Users\Harsh\Downloads\wp9633856-black-endeavour-wallpapers.jpg/300x200" alt="Eneavour"/>
+                <div class="details">
+                    <h3>Ford Endeavour</h3>
+                    <p>SUV - 7 Seats</p>
+                    <p class="price">Rs1000/day</p>
+                </div>
+            </div>
+            <div class="car-card">
+                <img src="https://unsplash.com/photos/white-kia-ceed-parked-in-tree-lined-road-dKoi-VEzFPI/300x200" alt="Superb"/>
+                <div class="details">
+                    <h3>Skoda Superb</h3>
+                    <p>Luxury - 5 Seats</p>
+                    <p class="price">Rs1500/day</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Car Rental Application. All rights reserved.</p>
+    </footer>
+    <script>
+        
+document.addEventListener('DOMContentLoaded', () => {
+    const carData = [
+        { name: "Mahindra Scorpio", type: "suv", seats: 7, price: 750, image: "https://mahindragoodwood.co.za/wp-content/uploads/2018/11/Mahindra-Scorpio-SUV-2.jpg" },
+        { name: "Ford Endeavour", type: "suv", seats: 7, price: 1000, image: "https://example.com/path/to/endeavour.jpg" },
+        { name: "Skoda Superb", type: "luxury", seats: 5, price: 1500, image: "https://unsplash.com/photos/white-kia-ceed-parked-in-tree-lined-road-dKoi-VEzFPI" },
+    ];
+
+    const form = document.querySelector('.search-form form');
+    const carList = document.querySelector('.car-list');
+
+    // Display cars dynamically
+    const displayCars = (cars) => {
+        carList.innerHTML = ''; // Clear current cars
+        cars.forEach(car => {
+            const carCard = `
+                <div class="car-card">
+                    <img src="${car.image}" alt="${car.name}">
+                    <div class="details">
+                        <h3>${car.name}</h3>
+                        <p>${car.type.charAt(0).toUpperCase() + car.type.slice(1)} - ${car.seats} Seats</p>
+                        <p class="price">Rs${car.price}/day</p>
+                    </div>
+                </div>`;
+            carList.innerHTML += carCard;
+        });
+    };
+
+    // Filter and display cars on form submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent page reload
+
+        const location = form.querySelector('input[type="text"]').value.toLowerCase();
+        const carType = form.querySelector('select').value;
+        const startDate = form.querySelector('input[type="date"]:nth-child(3)').value;
+        const endDate = form.querySelector('input[type="date"]:nth-child(4)').value;
+
+        // Validation for dates
+        if (new Date(startDate) > new Date(endDate)) {
+            alert("End date must be after the start date.");
+            return;
+        }
+
+        // Filter cars
+        const filteredCars = carData.filter(car => {
+            return (!carType || car.type === carType);
+        });
+
+        // Display filtered cars
+        displayCars(filteredCars);
+    });
+
+    // Initial display
+    displayCars(carData);
+});
+
+
+    </script>
+</body>
+</html>
